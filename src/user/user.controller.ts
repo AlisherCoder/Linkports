@@ -32,6 +32,12 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('mydata')
+  getMydata(@Req() request: Request) {
+    return this.userService.getMydata(request);
+  }
+
+  @UseGuards(AuthGuard)
   @Get()
   findAll(@Req() request: Request) {
     return this.userService.findAll(request);
@@ -45,7 +51,11 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Req() request: Request, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id') id: string,
+    @Req() request: Request,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.userService.update(id, request, updateUserDto);
   }
 

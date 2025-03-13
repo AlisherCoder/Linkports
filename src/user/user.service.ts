@@ -138,4 +138,14 @@ export class UserService {
       return { message: error.message };
     }
   }
+
+  async getMydata(request: Request) {
+    try {
+      let user = request['user'];
+      let data = await this.userModel.findById(user.id).populate('cards');
+      return { data };
+    } catch (error) {
+      return { message: error.message };
+    }
+  }
 }
