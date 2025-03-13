@@ -37,18 +37,21 @@ export class UserController {
     return this.userService.findAll(request);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+  findOne(@Param('id') id: string, @Req() request: Request) {
+    return this.userService.findOne(id, request);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  update(@Param('id') id: string, @Req() request: Request, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(id, request, updateUserDto);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(id);
+  remove(@Param('id') id: string, @Req() request: Request) {
+    return this.userService.remove(id, request);
   }
 }

@@ -16,7 +16,7 @@ import { join } from 'path';
     MongooseModule.forRoot(`${process.env.MONGO_URL}`),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/uploads',
+      serveRoot: '/file',
     }),
     UploadModule,
     CardModule,

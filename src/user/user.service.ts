@@ -78,7 +78,7 @@ export class UserService {
       if (user.role != 'ADMIN') {
         throw new ForbiddenException('Not allowed');
       }
-      
+
       let data = await this.userModel.find().populate('cards');
       return { data };
     } catch (error) {
@@ -86,8 +86,13 @@ export class UserService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, request: Request) {
     try {
+      let user = request['user'];
+      if (user.id != id && user.role != 'ADMIN') {
+        throw new ForbiddenException('Not allowed');
+      }
+
       let data = await this.userModel.findById(id).populate('cards');
       if (!data) {
         return { message: 'Not found user' };
@@ -98,8 +103,13 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, request: Request, updateUserDto: UpdateUserDto) {
     try {
+      let user = request['user'];
+      if (user.id != id && user.role != 'ADMIN') {
+        throw new ForbiddenException('Not allowed');
+      }
+
       let data = await this.userModel.findByIdAndUpdate(id, updateUserDto, {
         new: true,
       });
@@ -112,8 +122,13 @@ export class UserService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, request: Request) {
     try {
+      let user = request['user'];
+      if (user.id != id && user.role != 'ADMIN') {
+        throw new ForbiddenException('Not allowed');
+      }
+
       let data = await this.userModel.findByIdAndDelete(id);
       if (!data) {
         return { message: 'Not found user' };
